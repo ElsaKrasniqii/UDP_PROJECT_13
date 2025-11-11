@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{548cfd36-3f9a-426d-8ab7-c04cf4cbc3e4}</ProjectGuid>
-    <RootNamespace>UDPPROJECT13</RootNamespace>
+    <ProjectGuid>{42c16ccf-1ec0-4893-a43a-443e4180c602}</ProjectGuid>
+    <RootNamespace>UDPCLIENTREADONLY</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>UDP_CLIENT_ADMIN</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -125,7 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="client_admin.cpp" />
+    <ClCompile Include="client_readonly.cpp" />
     <ClCompile Include="shared.cpp" />
   </ItemGroup>
   <ItemGroup>
