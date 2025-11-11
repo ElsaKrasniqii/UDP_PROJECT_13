@@ -2,6 +2,7 @@
 #include "shared.h"
 #include <filesystem>
 #include <sstream>
+#include <fstream>
 
 bool isAuthenticated = false;
 const char* DATA_DIR = "data";
@@ -26,4 +27,12 @@ std::string listFiles() {
         ss << entry.path().filename().string() << "\n";
     }
     return ss.str();
+}
+std::string readFile(const std::string& filename) {
+    std::ifstream file(DATA_DIR + std::string("/") + filename);
+    if (!file) return "Gabim: Fajlli nuk ekziston.";
+
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
 }
