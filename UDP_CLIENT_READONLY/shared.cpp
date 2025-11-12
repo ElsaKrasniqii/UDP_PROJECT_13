@@ -70,3 +70,13 @@ string fileInfo(const string& filename) {
         time.time_since_epoch()).count() << "(epoch seconds)\n";
     return ss.str();
 }
+string uploadFile(const string& name, const string& content) {
+    std::ofstream file(DATA_DIR + string("/") + name);
+    if (!file) return "Gabim: nuk mund te krijohet fajlli.";
+
+    file << content;
+    return "Fajlli u ruajt me sukses.";
+}
+string downloadFile(const string& name) {
+    return readFile(name);
+}
