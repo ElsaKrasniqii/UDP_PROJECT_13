@@ -36,3 +36,34 @@ if (sock == INVALID_SOCKET) {
     WSACleanup();
     return 1;
 }
+
+srv.sin_family = AF_INET; 
+srv.sin_addr.s_addr = INADDR_ANY;
+srv.sin_port = htons(PORT);
+
+
+if (bind(sock, (sockaddr*)&srv, sizeof(srv)) == SOCKET_ERROR) {
+    cout << "bind() failed: " << WSAGetLastError() << "\n";
+    closesocket(sock);
+    WSACleanup();
+    return 1;
+}
+
+
+cout << "UDP server nis ne portin: " << PORT << "\n";
+map<string, ClientInfo> clients;
+ensureDataDir();
+
+while (true) {
+    memset(buffer, 0, BUFFER_SIZE);
+
+    int got = recvfrom(sock, buffer, BUFFER_SIZE, 0, (sockaddr*)&cli, &cliLen);
+    if (got == SOCKET_ERROR) {
+
+        cerr << "recvfrom() failed: " << WSAGetLastError() << "\n";
+        continue;
+    }
+}
+
+
+
