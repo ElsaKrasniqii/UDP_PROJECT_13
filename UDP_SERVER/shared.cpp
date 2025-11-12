@@ -36,3 +36,23 @@ std::string readFile(const std::string& filename) {
     buffer << file.rdbuf();
     return buffer.str();
 }
+
+std::string deleteFile(const std::string& filename) {
+    std::string path = std::string(DATA_DIR) + "/" + filename;
+
+    if (!std::filesystem::exists(path))
+        return "Gabim: Fajlli nuk ekziston.";
+
+    std::filesystem::remove(path);
+    return "Fajlli u fshi me sukses.";
+}
+std::string searchFiles(const std::string& keyword) {
+    std::stringstream ss;
+
+    for (const auto& entry : std::filesystem::directory_iterator(DATA_DIR)) {
+        std::string name = entry.path().filename().string();
+        if (name.find(keyword) != std::string::npos)
+            ss << name << "\n";
+    }
+    return ss.str();
+}
