@@ -4,41 +4,42 @@
 #include <sstream>
 #include <fstream>
 
+using namespace std;
+
 bool isAuthenticated = false;
 const char* DATA_DIR = "data";
 
+listFiles();
+ readFile(const string& name);
+ deleteFile(const string& name);
+ searchFiles(const string& key);
+fileInfo(const string& name);
+uploadFile(const string& name, const string& content);
+downloadFile(const string& name);
 
-std::string listFiles();
-std::string readFile(const std::string& name);
-std::string deleteFile(const std::string& name);
-std::string searchFiles(const std::string& key);
-std::string fileInfo(const std::string& name);
-std::string uploadFile(const std::string& name, const std::string& content);
-std::string downloadFile(const std::string& name);
-
-std::string handleCommand(const std::string& cmd);
-
+handleCommand(const std::string& cmd);
 
 
-std::string listFiles() {
-    std::stringstream ss;
 
-    for (const auto& entry : std::filesystem::directory_iterator(DATA_DIR)) {
+string listFiles() {
+    stringstream ss;
+
+    for (const auto& entry : filesystem::directory_iterator(DATA_DIR)) {
         ss << entry.path().filename().string() << "\n";
     }
     return ss.str();
 }
-std::string readFile(const std::string& filename) {
-    std::ifstream file(DATA_DIR + std::string("/") + filename);
+std::string readFile(const string& filename) {
+    ifstream file(DATA_DIR + string("/") + filename);
     if (!file) return "Gabim: Fajlli nuk ekziston.";
 
-    std::stringstream buffer;
+    stringstream buffer;
     buffer << file.rdbuf();
     return buffer.str();
 }
 
-std::string deleteFile(const std::string& filename) {
-    std::string path = std::string(DATA_DIR) + "/" + filename;
+string deleteFile(const string& filename) {
+    string path = string(DATA_DIR) + "/" + filename;
 
     if (!std::filesystem::exists(path))
         return "Gabim: Fajlli nuk ekziston.";
@@ -46,13 +47,27 @@ std::string deleteFile(const std::string& filename) {
     std::filesystem::remove(path);
     return "Fajlli u fshi me sukses.";
 }
-std::string searchFiles(const std::string& keyword) {
+string searchFiles(const string& keyword) {
     std::stringstream ss;
 
-    for (const auto& entry : std::filesystem::directory_iterator(DATA_DIR)) {
+    for (const auto& entry : filesystem::directory_iterator(DATA_DIR)) {
         std::string name = entry.path().filename().string();
-        if (name.find(keyword) != std::string::npos)
+        if (name.find(keyword) != string::npos)
             ss << name << "\n";
     }
+    return ss.str();
+}
+string fileInfo(const string& filename) {
+    string path = string(DATA_DIR) + "/" + filename;
+    if (filesystem::exists(path))
+        return "Gabim:nuk egziston.";
+
+    auto fsize = filesystem::file_size(path);
+    auto time = filesystem::last_write_time(path);
+    
+    stringstream ss;
+    ss << "Madhesia:" << fsize << "bytes\n";
+    ss << "Modifikuar:" << chrono::duration_cast<chrono:seconds>(
+        time.time_since_epoch()).count() << "(epoch seconds)\n";
     return ss.str();
 }

@@ -55,3 +55,17 @@ std::string searchFiles(const std::string& keyword) {
     }
     return ss.str();
 }
+string fileInfo(const string& filename) {
+    string path = string(DATA_DIR) + "/" + filename;
+    if (filesystem::exists(path))
+        return "Gabim:nuk egziston.";
+
+    auto fsize = filesystem::file_size(path);
+    auto time = filesystem::last_write_time(path);
+
+    stringstream ss;
+    ss << "Madhesia:" << fsize << "bytes\n";
+    ss << "Modifikuar:" << chrono::duration_cast<chrono:seconds>(
+        time.time_since_epoch()).count() << "(epoch seconds)\n";
+    return ss.str();
+}
